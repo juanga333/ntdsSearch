@@ -1,8 +1,7 @@
 import argparse
-import sys
-import getpass
 import hashlib
 import binascii
+
 
 def repeated(dict):
     rev_dict = {}
@@ -17,7 +16,7 @@ def repeated(dict):
 
 def getUsernameHash(dict, username):
     if username in dict:
-        print(dict[args.username])
+        print(f"{username} hash: {dict[args.username]}")
     else:
         print(f"{username} not in dump")
 
@@ -31,18 +30,28 @@ def getUsernameByHash(dict, hash, password=None):
             print(f"\t {key}")
             a = a + 1
 
+
+def getNTLM(password):
+    genhash = hashlib.new('md4', password.encode('utf-16le')).digest()
+    genHash = binascii.hexlify(genhash)
+    return genHash
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="")
+    parser = argparse.ArgumentParser(description="Tool developed to search for passwords in secretsdump")
     parser.add_argument("-f", "--file", required=True, help="Secretsdump output")
-    parser.add_argument("-u", "--username", required=False, help="Get username password")
+    parser.add_argument("-q", "--removeHistory", required=False, action='store_true',
+                        help="Remove history hashes from list")
+    parser.add_argument("-u", "--username", required=False, help="Get hash by username")
     parser.add_argument("-r", "--repeated", required=False, action='store_true', help="Get repeated hashes")
-    parser.add_argument("-q", "--removeHistory", required=False, action='store_true', help="Remove history hashes from list")
     parser.add_argument("-g", "--getUsernamesByHash", required=False, help="Get usernames by hash")
     parser.add_argument("-p", "--getUsernameByPassword", required=False, help="Get usernames by password")
+    parser.add_argument("-pL", "--getUsernameByPasswordList", required=False, help="Get usernames by password")
     args = parser.parse_args()
 
     f = open(args.file, "r")
     Lines = f.readlines()
+    f.close()
     dict = {}
 
     if args.removeHistory:
@@ -75,6 +84,14 @@ if __name__ == "__main__":
 
     password = args.getUsernameByPassword
     if password is not None:
-        genhash = hashlib.new('md4', password.encode('utf-16le')).digest()
-        genHash = binascii.hexlify(genhash)
-        getUsernameByHash(dict, genHash.decode(),password)
+        genHash = getNTLM(password)
+        getUsernameByHash(dict, genHash.decode(), password)
+
+    passwordList = args.getUsernameByPasswordList
+    if passwordList is not None:
+        f = open(passwordList, "r")
+        Lines = f.read().split("\n")
+        f.close()
+        for line in Lines:
+            genHash = getNTLM(line)
+            getUsernameByHash(dict, genHash.decode(), line)
