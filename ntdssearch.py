@@ -93,5 +93,6 @@ if __name__ == "__main__":
         Lines = f.read().split("\n")
         f.close()
         for line in Lines:
-            genHash = getNTLM(line)
-            getUsernameByHash(dict, genHash.decode(), line)
+            if line != "":
+                genHash = getNTLM(line)
+                getUsernameByHash(dict, genHash.decode(), line)
