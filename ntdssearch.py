@@ -44,7 +44,7 @@ if __name__ == "__main__":
                         help="Remove history hashes from list")
     parser.add_argument("-u", "--username", required=False, help="Get hash by username")
     parser.add_argument("-r", "--repeated", required=False, action='store_true', help="Get repeated hashes")
-    parser.add_argument("-g", "--getUsernamesByHash", required=False, help="Get usernames by hash")
+    parser.add_argument("-n", "--getUsernamesByHash", required=False, help="Get usernames by hash")
     parser.add_argument("-p", "--getUsernameByPassword", required=False, help="Get usernames by password")
     parser.add_argument("-pL", "--getUsernameByPasswordList", required=False, help="Get usernames by password")
     args = parser.parse_args()
