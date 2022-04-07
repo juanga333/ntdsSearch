@@ -20,6 +20,11 @@ _Get users by its password_
 python3 ntdsSearch.py -f <secretsdump_output> -p <password>
 ```
 
+_Get users by a list of passwords_
+```
+python3 ntdsSearch.py -f <secretsdump_output> -pL <password_list>
+```
+
 _Get all the users of the domain that have their hash repeated_
 ```
 python3 ntdsSearch.py -f <secretsdump_output> -r
