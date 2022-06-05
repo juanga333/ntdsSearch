@@ -46,7 +46,8 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--repeated", required=False, action='store_true', help="Get repeated hashes")
     parser.add_argument("-n", "--getUsernamesByHash", required=False, help="Get usernames by hash")
     parser.add_argument("-p", "--getUsernameByPassword", required=False, help="Get usernames by password")
-    parser.add_argument("-pL", "--getUsernameByPasswordList", required=False, help="Get usernames by password")
+    parser.add_argument("-pL", "--getUsernameByPasswordList", required=False, help="Get usernames by password list")
+    parser.add_argument("-hL", "--getUsernameByHashList", required=False, help="Get usernames by hash list")
     args = parser.parse_args()
 
     f = open(args.file, "r")
@@ -96,3 +97,13 @@ if __name__ == "__main__":
             if line != "":
                 genHash = getNTLM(line)
                 getUsernameByHash(dict, genHash.decode(), line)
+
+    hashList = args.getUsernameByHashList
+    if hashList is not None:
+        f = open(hashList, "r")
+        Lines = f.read().split("\n")
+        f.close()
+        for line in Lines:
+            if line != "":
+                getUsernameByHash(dict, line.lower(), None)
+
