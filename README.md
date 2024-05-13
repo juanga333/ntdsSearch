@@ -1,5 +1,5 @@
 
-# ntdsSearch
+# ntdsSearch aka Time2Coffe
 
 This project implements a console tool for loading, searching, and managing data extracted from ntds.dit (SecretsDump output).
 
@@ -16,7 +16,7 @@ This project implements a console tool for loading, searching, and managing data
 -   `readline` module (on Unix-based systems)
 -   `pyreadline` module (on Windows, if necessary)
 
-### Usage
+## Usage
 ```
 python3 ntdsSearch.py
 ```
@@ -32,7 +32,7 @@ python3 ntdsSearch.py
 -   `clear`: Clears the console screen.
 -   `exit`: Exits the application.
 
-### Usage Example
+### Examples
 
 To load a file and search for a specific hash:
 
@@ -40,7 +40,7 @@ To load a file and search for a specific hash:
 (ntdsSearch) load example_ntds_output.txt
 (ntdsSearch: example_ntds_output.txt) search_hash e19ccf75ee54e06b
 ```
-To list repetitions between users
+To list repetitions between users:
 ```
 (ntdsSearch: example_ntds_output.txt) search_password password1
 ```
